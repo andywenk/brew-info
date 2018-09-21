@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+puts "Get info of all installed apps installed via brew\n" 
+puts "Using Ruby #{RUBY_VERSION}.p#{RUBY_PATCHLEVEL}\n"
+
+brew_list = `brew list`
+brew_list.gsub!(/\n/, ',')
+brew_list = brew_list.split(/,/)
+
+puts "\nthere are #{brew_list.count} bottles installed\n" 
+
+print "Do you want to get the info? [y|n]: "
+answer = gets.chomp
+
+exit(0) unless answer == 'y'
+
+puts "----start----\n"
+
+brew_list.each do |bottle|
+  info        =  `brew info #{bottle}`
+  info_array  = info.split(/\n/)
+
+  puts info_array[0..2].join("\n")
+  puts "--------------------\n"
+end
+
+puts "----end----\n"
